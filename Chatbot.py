@@ -4,6 +4,7 @@ import os
 
 with st.sidebar:
 #    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    st.write("DB username:", st.secrets["openai1"]) 
     openai_api_key = st.secrets["openai1"]
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
