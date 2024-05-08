@@ -45,12 +45,18 @@ def llm_selector():
 
 
 
-st.title("📝 文本纠错")
+st.title("📝 Patent disclosure document")
+uploaded_file = st.file_uploader("Upload an article", type=("txt", "md", "docx"))
 
 
 model = llm_selector()
-chat_key = f"文本纠错_chat_history_{model}"  # Unique key for each mode and model
-default_prompt = "你是一名文本纠错助手，请将下列语句中的错字、多字、少字修改正确,只输出修改后的句子,如果没有需要修改的地方，直接回复原句。不必做解释，直接输出即可。。"
+chat_key = f"对话_chat_history_{model}"  # Unique key for each mode and model
+default_prompt = ("你是一位有用的中文助手，回答我的任何问题都要详细说明，并且用中文回答我。"
+                  "我要升成一篇专利交底书，请用中文回答我."
+                  "内容包括发明名称、技术领域、现有技术一的技术方案、现有技术一的缺点、"
+                  "与本发明相关的现有技术二、本发明所要解决的技术问题、本发明提供的完整技术方案、"
+                  "本发明技术方案带来的有益效果、针对本发明提供的完整技术方案中的技术方案，"
+                  "是否还有别的替代方案同样能完成发明目的、本发明的技术关键点和欲保护点是什么。")
 
 system_prompt = system_prompt_input(default_prompt)
 init_chat_history(chat_key, system_prompt)
@@ -58,10 +64,10 @@ chat_history = get_chat_history(chat_key)
 for message in chat_history:
     print_chat_message(message)
 
-question = st.text_input("Enter text for correction")
+question = st.chat_input()
 
 debug_mode = st.sidebar.checkbox("Debug Mode", value=True)
-log_interaction("User input", {"mode": "文本纠错", "question": question})
+log_interaction("User input", {"mode": "对话", "question": question})
 
 if question:
     prompt = f"""{anthropic.HUMAN_PROMPT} Here's an article:\n\n<article>
@@ -69,9 +75,13 @@ if question:
 
     if question:
         user_message = {"role": "user", "content": question}
+
         # if app_mode == "语音识别":
         print_chat_message(user_message)
         chat_history.append(user_message)
+        if uploaded_file:
+            article = uploaded_file.read().decode()
+            chat_history.append({"role": "user", "content": article})  # 添加用户上传的文件内容作为对话历史的一部分
         response = ol.chat(model=model, messages=chat_history)
         answer = response['message']['content']
         ai_message = {"role": "assistant", "content": answer}
