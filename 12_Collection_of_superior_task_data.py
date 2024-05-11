@@ -45,7 +45,7 @@ def llm_selector():
 
 
 
-st.title("🪪 Collection of superior task data")
+st.title("🪪 ollection of superior task data")
 uploaded_file = st.file_uploader("Upload an article", type=("txt"))
 
 
