@@ -1,9 +1,10 @@
 from openai import OpenAI
 import streamlit as st
 from src import auth
+import os
 
 authenticator = auth.StreamlitGoogleAuth(
-    secret_credentials_path='credentials.json',
+    secret_credentials_path=os.environ.get('GOOGLE_CREDENTIALS'),
     cookie_name='my_cookie_name',
     cookie_key='this_is_secret',
     redirect_uri='https://glorious-dollop-4pg6r966rxqfj7v-8501.app.github.dev',
