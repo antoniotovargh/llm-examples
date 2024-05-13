@@ -29,7 +29,7 @@ SCOPES = [
     
     ]
 
-CREDENTIALS = 'credentials.json'
+CREDENTIALS = os.environ.get('GOOGLE_CREDENTIALS')
 
 class GoogleWorkspaceAuth():
     @staticmethod
