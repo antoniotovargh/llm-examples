@@ -5,8 +5,8 @@ import trubrics
 
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="feedback_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/pages/5_Chat_with_user_feedback.py)"
+    "[Get your Gemini API key](https://platform.openai.com/account/api-keys)"
+    # "[View the source code](https://github.com/streamlit/llm-examples/blob/main/pages/5_Chat_with_user_feedback.py)"
     "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
 
 st.title("📝 Chat with feedback (Trubrics)")
@@ -32,7 +32,7 @@ if prompt := st.chat_input(placeholder="Tell me a joke about sharks"):
     st.chat_message("user").write(prompt)
 
     if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
+        st.info("Please add your Gemini API key to continue.")
         st.stop()
     client = OpenAI(api_key=openai_api_key)
     response = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
