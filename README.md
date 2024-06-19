@@ -1,25 +1,13 @@
-# 🎈 Streamlit + LLM Examples App
+# 🎈 HuggingMind Bot
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)
-
-Starter examples for building LLM apps with Streamlit.
 
 ## Overview of the App
 
-This app showcases a growing collection of LLM minimum working examples.
-
-Current examples include:
-
-- Chatbot
-- File Q&A
-- Chat with Internet search
-- LangChain Quickstart
-- LangChain PromptTemplate
-- Chat with user feedback
+HuggingMind is an AI-driven mental health chatbot provides university students with 24/7 personalized support and immediate access to professional guidance, utilizing advanced language models and university-specific mental health resources.
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://llm-examples.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://huggingmind.streamlit.app/)
 
 ### Get an OpenAI API key
 
