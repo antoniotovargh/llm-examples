@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+import os
 from pydub import AudioSegment
 from pydub.playback import play
 from io import BytesIO
