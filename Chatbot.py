@@ -1,4 +1,4 @@
-Such a simple little tinyimport streamlit as st
+import streamlit as st
 import os
 from openai import OpenAI
 from pydub import AudioSegment
@@ -81,4 +81,4 @@ if prompt := st.chat_input():
         file_buffer = BytesIO(uploaded_file.read())
         if openai_client:
             transcribed_text = transcribe_speech(file_buffer, openai_client)
-            st.write("Transcribed text: ", transcribed_text) but
+            st.write("Transcribed text: ", transcribed_text)
