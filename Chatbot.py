@@ -1,34 +1,35 @@
 import streamlit as st
+import openai
 import os
-from openai import OpenAI
-from openai import api_resources
-import requests
+from pydub import AudioSegment
+from pydub.playback import play
 from io import BytesIO
 
 # Initialize OpenAI client instance
 def init_openai():
     openai_api_key = st.session_state.get("openai_api_key")
     if openai_api_key:
-        return OpenAI(api_key=openai_api_key)
+        openai.api_key = openai_api_key
+        return openai
     return None
 
 # Function to generate speech from text
 def generate_speech(text, client):
-    response = client.audio.speech.create(
+    response = client.Audio.create(
         model="tts-1",
         voice="alloy",
         input=text,
     )
-    audio_content = response.data
+    audio_content = response["audio"]
     st.audio(audio_content, format="audio/mp3")
 
 # Function to transcribe speech to text
 def transcribe_speech(file_buffer, client):
-    response = client.audio.transcriptions.create(
+    response = client.Audio.transcriptions.create(
         file=file_buffer,
         model="whisper-1"
     )
-    return response.get("text")
+    return response["text"]
 
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="openai_api_key", type="password")
@@ -60,7 +61,7 @@ if prompt := st.chat_input():
     st.session_state["messages"].append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
-    response = openai_client.chat.completions.create(
+    response = openai_client.ChatCompletion.create(
         model="gpt-4",
         messages=st.session_state["messages"]
     )
@@ -73,9 +74,8 @@ if prompt := st.chat_input():
     if st.button("Generate Speech"):
         if openai_client:
             generate_speech(msg, openai_client)
-    st.file_uploader("Upload Audio for Transcription", type=["mp3", "wav"])
 
-    uploaded_file = st.file_uploader("Upload an audio file for transcription")
+    uploaded_file = st.file_uploader("Upload Audio for Transcription", type=["mp3", "wav"])
     if uploaded_file is not None:
         file_buffer = BytesIO(uploaded_file.read())
         if openai_client:
